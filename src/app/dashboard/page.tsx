@@ -3,6 +3,7 @@ import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { SignOutButton } from '@/components/sign-out-button';
 import { TransactionsTable } from '@/components/transactions-table';
+import { UploadZone } from '@/components/upload-zone';
 import { db } from '@/db';
 import { transactions } from '@/db/schema';
 import { auth } from '@/lib/auth';
@@ -31,6 +32,7 @@ export default async function DashboardPage() {
         </div>
         <SignOutButton />
       </header>
+      <UploadZone />
       <TransactionsTable data={rows} />
     </main>
   );

@@ -11,7 +11,8 @@
     "db:stop": "pg_ctl -D \"$HOME/.local/share/spendium/pgdata\" stop",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed": "node --env-file=.env --import tsx scripts/seed.ts"
+    "db:seed": "node --env-file=.env --import tsx scripts/seed.ts",
+    "db:cleanup-expired": "node --env-file=.env --import tsx scripts/cleanup-expired.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.8.0",
@@ -23,6 +24,7 @@
     "framer-motion": "^13.4.4",
     "lucide-react": "^1.48.0",
     "next": "16.3.6",
+    "pdfjs-dist": "^6.3.289",
     "pg": "^8.23.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",
