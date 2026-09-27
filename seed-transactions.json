@@ -1,0 +1,819 @@
+[
+  {
+    "id": "txn_002",
+    "date": "2026-09-01",
+    "particulars": "Meesho",
+    "amount": 183.0,
+    "type": "credit",
+    "category": "Other",
+    "tags": []
+  },
+  {
+    "id": "txn_003",
+    "date": "2026-09-02",
+    "particulars": "GROWW",
+    "amount": 1335.0,
+    "type": "debit",
+    "category": "Trading & Investments",
+    "tags": [
+      "Groww"
+    ]
+  },
+  {
+    "id": "txn_004",
+    "date": "2026-09-02",
+    "particulars": "GROWW",
+    "amount": 1535.0,
+    "type": "debit",
+    "category": "Trading & Investments",
+    "tags": [
+      "Groww"
+    ]
+  },
+  {
+    "id": "txn_005",
+    "date": "2026-09-02",
+    "particulars": "Jai mata",
+    "amount": 45.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_006",
+    "date": "2026-09-02",
+    "particulars": "PATLIPUT",
+    "amount": 54.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_007",
+    "date": "2026-09-02",
+    "particulars": "Blinkit",
+    "amount": 211.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Delivery"
+    ]
+  },
+  {
+    "id": "txn_008",
+    "date": "2026-09-02",
+    "particulars": "JAYSHREE",
+    "amount": 251.0,
+    "type": "credit",
+    "category": "Other",
+    "tags": [
+      "Transfer"
+    ]
+  },
+  {
+    "id": "txn_009",
+    "date": "2026-09-03",
+    "particulars": "Meesho",
+    "amount": 480.0,
+    "type": "credit",
+    "category": "Other",
+    "tags": [
+      "Refund"
+    ]
+  },
+  {
+    "id": "txn_010",
+    "date": "2026-09-03",
+    "particulars": "SHUBHSHREE",
+    "amount": 2000.0,
+    "type": "credit",
+    "category": "Other",
+    "tags": [
+      "Pocket Money"
+    ]
+  },
+  {
+    "id": "txn_011",
+    "date": "2026-09-03",
+    "particulars": "GROWW",
+    "amount": 118.0,
+    "type": "debit",
+    "category": "Trading & Investments",
+    "tags": [
+      "Groww"
+    ]
+  },
+  {
+    "id": "txn_012",
+    "date": "2026-09-03",
+    "particulars": "PRAMOD K",
+    "amount": 70.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_013",
+    "date": "2026-09-03",
+    "particulars": "HARI OM",
+    "amount": 130.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_014",
+    "date": "2026-09-03",
+    "particulars": "JAYSHREE",
+    "amount": 5000.0,
+    "type": "credit",
+    "category": "Other",
+    "tags": [
+      "Pocket Money"
+    ]
+  },
+  {
+    "id": "txn_015",
+    "date": "2026-09-04",
+    "particulars": "GROWW",
+    "amount": 908.0,
+    "type": "debit",
+    "category": "Trading & Investments",
+    "tags": [
+      "Groww"
+    ]
+  },
+  {
+    "id": "txn_016",
+    "date": "2026-09-04",
+    "particulars": "Kanishka",
+    "amount": 55.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_017",
+    "date": "2026-09-05",
+    "particulars": "BIT CANT",
+    "amount": 30.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_018",
+    "date": "2026-09-05",
+    "particulars": "ABHISHEK",
+    "amount": 2000.0,
+    "type": "debit",
+    "category": "Peer Transfers",
+    "tags": [
+      "Self Transfer"
+    ]
+  },
+  {
+    "id": "txn_019",
+    "date": "2026-09-06",
+    "particulars": "Flipkart",
+    "amount": 560.0,
+    "type": "debit",
+    "category": "General Shopping & Electronics",
+    "tags": [
+      "E-commerce"
+    ]
+  },
+  {
+    "id": "txn_020",
+    "date": "2026-09-06",
+    "particulars": "GULLAKT",
+    "amount": 672.0,
+    "type": "debit",
+    "category": "Clothing & Apparel",
+    "tags": [
+      "Myntra",
+      "Gullak"
+    ]
+  },
+  {
+    "id": "txn_021",
+    "date": "2026-09-06",
+    "particulars": "Myntra",
+    "amount": 137.0,
+    "type": "debit",
+    "category": "Clothing & Apparel",
+    "tags": [
+      "E-commerce"
+    ]
+  },
+  {
+    "id": "txn_022",
+    "date": "2026-09-07",
+    "particulars": "GULLAKT",
+    "amount": 148.12,
+    "type": "debit",
+    "category": "Clothing & Apparel",
+    "tags": [
+      "Myntra",
+      "Gullak"
+    ]
+  },
+  {
+    "id": "txn_023",
+    "date": "2026-09-07",
+    "particulars": "POS FLIPKART",
+    "amount": 16.0,
+    "type": "debit",
+    "category": "General Shopping & Electronics",
+    "tags": [
+      "E-commerce"
+    ]
+  },
+  {
+    "id": "txn_024",
+    "date": "2026-09-07",
+    "particulars": "GULLAKT",
+    "amount": 1.0,
+    "type": "debit",
+    "category": "Clothing & Apparel",
+    "tags": [
+      "Myntra",
+      "Gullak"
+    ]
+  },
+  {
+    "id": "txn_025",
+    "date": "2026-09-07",
+    "particulars": "GROWW",
+    "amount": 1115.0,
+    "type": "debit",
+    "category": "Trading & Investments",
+    "tags": [
+      "Groww"
+    ]
+  },
+  {
+    "id": "txn_026",
+    "date": "2026-09-08",
+    "particulars": "Swiggy Instamart",
+    "amount": 550.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Delivery"
+    ]
+  },
+  {
+    "id": "txn_027",
+    "date": "2026-09-08",
+    "particulars": "Kanishka",
+    "amount": 20.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_028",
+    "date": "2026-09-08",
+    "particulars": "GROWW",
+    "amount": 3.44,
+    "type": "credit",
+    "category": "Trading & Investments",
+    "tags": [
+      "Groww",
+      "Withdrawal"
+    ]
+  },
+  {
+    "id": "txn_029",
+    "date": "2026-09-11",
+    "particulars": "Groww Invest",
+    "amount": 77.76,
+    "type": "credit",
+    "category": "Trading & Investments",
+    "tags": [
+      "Groww",
+      "Withdrawal"
+    ]
+  },
+  {
+    "id": "txn_030",
+    "date": "2026-09-11",
+    "particulars": "Prashant",
+    "amount": 3000.0,
+    "type": "credit",
+    "category": "Peer Transfers",
+    "tags": [
+      "Loan Repayment Received"
+    ]
+  },
+  {
+    "id": "txn_031",
+    "date": "2026-09-12",
+    "particulars": "Healthifyme",
+    "amount": 49.0,
+    "type": "debit",
+    "category": "Subscriptions & Utilities",
+    "tags": [
+      "App"
+    ]
+  },
+  {
+    "id": "txn_032",
+    "date": "2026-09-14",
+    "particulars": "kanoharelectri",
+    "amount": 14536.0,
+    "type": "debit",
+    "category": "Trading & Investments",
+    "tags": [
+      "IPO Allotment"
+    ]
+  },
+  {
+    "id": "txn_033",
+    "date": "2026-09-14",
+    "particulars": "PATLIPUT",
+    "amount": 35.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_034",
+    "date": "2026-09-14",
+    "particulars": "PRAMOD K",
+    "amount": 6.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_035",
+    "date": "2026-09-14",
+    "particulars": "PRAMOD",
+    "amount": 20.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_036",
+    "date": "2026-09-15",
+    "particulars": "Kanishka",
+    "amount": 12.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_037",
+    "date": "2026-09-15",
+    "particulars": "REFUND (Flipkart)",
+    "amount": 16.0,
+    "type": "credit",
+    "category": "Other",
+    "tags": [
+      "Refund"
+    ]
+  },
+  {
+    "id": "txn_038",
+    "date": "2026-09-15",
+    "particulars": "Jai mata",
+    "amount": 10.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_039",
+    "date": "2026-09-16",
+    "particulars": "UPI Refund",
+    "amount": 49.0,
+    "type": "credit",
+    "category": "Other",
+    "tags": [
+      "Refund"
+    ]
+  },
+  {
+    "id": "txn_040",
+    "date": "2026-09-16",
+    "particulars": "lazypay",
+    "amount": 491.0,
+    "type": "debit",
+    "category": "Other",
+    "tags": [
+      "Previous Month Bill"
+    ]
+  },
+  {
+    "id": "txn_041",
+    "date": "2026-09-16",
+    "particulars": "Amazon",
+    "amount": 414.49,
+    "type": "debit",
+    "category": "General Shopping & Electronics",
+    "tags": [
+      "E-commerce"
+    ]
+  },
+  {
+    "id": "txn_042",
+    "date": "2026-09-16",
+    "particulars": "PATLIPUT",
+    "amount": 25.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_043",
+    "date": "2026-09-16",
+    "particulars": "Kanishka",
+    "amount": 35.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_044",
+    "date": "2026-09-17",
+    "particulars": "BROKEN TU",
+    "amount": 1.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_045",
+    "date": "2026-09-17",
+    "particulars": "BROKEN TU",
+    "amount": 1.0,
+    "type": "credit",
+    "category": "Other",
+    "tags": [
+      "Refund"
+    ]
+  },
+  {
+    "id": "txn_046",
+    "date": "2026-09-17",
+    "particulars": "Raise Se",
+    "amount": 5000.0,
+    "type": "debit",
+    "category": "Trading & Investments",
+    "tags": [
+      "Deposit"
+    ]
+  },
+  {
+    "id": "txn_047",
+    "date": "2026-09-17",
+    "particulars": "Kanishka",
+    "amount": 35.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_048",
+    "date": "2026-09-18",
+    "particulars": "Prashant",
+    "amount": 3000.0,
+    "type": "debit",
+    "category": "Peer Transfers",
+    "tags": [
+      "Loan Returned"
+    ]
+  },
+  {
+    "id": "txn_049",
+    "date": "2026-09-18",
+    "particulars": "Amazon P",
+    "amount": 75.0,
+    "type": "debit",
+    "category": "General Shopping & Electronics",
+    "tags": [
+      "E-commerce"
+    ]
+  },
+  {
+    "id": "txn_050",
+    "date": "2026-09-18",
+    "particulars": "RAISESECURITIESPRIV",
+    "amount": 4609.0,
+    "type": "credit",
+    "category": "Trading & Investments",
+    "tags": [
+      "Withdrawal"
+    ]
+  },
+  {
+    "id": "txn_051",
+    "date": "2026-09-18",
+    "particulars": "GROWW",
+    "amount": 13453.61,
+    "type": "credit",
+    "category": "Trading & Investments",
+    "tags": [
+      "Withdrawal"
+    ]
+  },
+  {
+    "id": "txn_052",
+    "date": "2026-09-18",
+    "particulars": "Kanishka",
+    "amount": 20.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_053",
+    "date": "2026-09-20",
+    "particulars": "Kanishka",
+    "amount": 15.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_054",
+    "date": "2026-09-20",
+    "particulars": "JioMart",
+    "amount": 768.65,
+    "type": "debit",
+    "category": "General Shopping & Electronics",
+    "tags": [
+      "Grocery/Shopping"
+    ]
+  },
+  {
+    "id": "txn_055",
+    "date": "2026-09-20",
+    "particulars": "NPCI",
+    "amount": 18.0,
+    "type": "credit",
+    "category": "Other",
+    "tags": [
+      "Cashback"
+    ]
+  },
+  {
+    "id": "txn_056",
+    "date": "2026-09-21",
+    "particulars": "Kanishka",
+    "amount": 15.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_057",
+    "date": "2026-09-21",
+    "particulars": "Anishme",
+    "amount": 60.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_058",
+    "date": "2026-09-21",
+    "particulars": "Md Afzal",
+    "amount": 190.0,
+    "type": "debit",
+    "category": "General Shopping & Electronics",
+    "tags": [
+      "Phone Glass"
+    ]
+  },
+  {
+    "id": "txn_059",
+    "date": "2026-09-21",
+    "particulars": "Ravindre",
+    "amount": 280.0,
+    "type": "debit",
+    "category": "Clothing & Apparel",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_060",
+    "date": "2026-09-21",
+    "particulars": "BIT CANT",
+    "amount": 40.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_061",
+    "date": "2026-09-21",
+    "particulars": "GROWW",
+    "amount": 4736.79,
+    "type": "credit",
+    "category": "Trading & Investments",
+    "tags": [
+      "Withdrawal"
+    ]
+  },
+  {
+    "id": "txn_062",
+    "date": "2026-09-21",
+    "particulars": "Kanishka",
+    "amount": 13.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  },
+  {
+    "id": "txn_063",
+    "date": "2026-09-22",
+    "particulars": "MS SNAN",
+    "amount": 592.0,
+    "type": "debit",
+    "category": "Travel & Trips",
+    "tags": [
+      "Trip with friends"
+    ]
+  },
+  {
+    "id": "txn_064",
+    "date": "2026-09-22",
+    "particulars": "Modifue",
+    "amount": 438.0,
+    "type": "debit",
+    "category": "Travel & Trips",
+    "tags": [
+      "Trip with friends"
+    ]
+  },
+  {
+    "id": "txn_065",
+    "date": "2026-09-22",
+    "particulars": "Shreesa",
+    "amount": 40.0,
+    "type": "debit",
+    "category": "Travel & Trips",
+    "tags": [
+      "Trip with friends"
+    ]
+  },
+  {
+    "id": "txn_066",
+    "date": "2026-09-23",
+    "particulars": "nationalstock",
+    "amount": 14280.0,
+    "type": "debit",
+    "category": "Trading & Investments",
+    "tags": [
+      "Deposit"
+    ]
+  },
+  {
+    "id": "txn_067",
+    "date": "2026-09-23",
+    "particulars": "AJIT SAH",
+    "amount": 55.0,
+    "type": "debit",
+    "category": "Travel & Trips",
+    "tags": [
+      "Trip with friends"
+    ]
+  },
+  {
+    "id": "txn_068",
+    "date": "2026-09-23",
+    "particulars": "Sunil st",
+    "amount": 1.0,
+    "type": "debit",
+    "category": "Travel & Trips",
+    "tags": [
+      "Trip with friends"
+    ]
+  },
+  {
+    "id": "txn_069",
+    "date": "2026-09-23",
+    "particulars": "Sunil st",
+    "amount": 510.0,
+    "type": "debit",
+    "category": "Travel & Trips",
+    "tags": [
+      "Trip with friends"
+    ]
+  },
+  {
+    "id": "txn_070",
+    "date": "2026-09-23",
+    "particulars": "MS MADHU",
+    "amount": 341.0,
+    "type": "debit",
+    "category": "Travel & Trips",
+    "tags": [
+      "Trip with friends"
+    ]
+  },
+  {
+    "id": "txn_071",
+    "date": "2026-09-23",
+    "particulars": "Jharkhand",
+    "amount": 850.0,
+    "type": "debit",
+    "category": "Travel & Trips",
+    "tags": [
+      "Trip with friends"
+    ]
+  },
+  {
+    "id": "txn_072",
+    "date": "2026-09-24",
+    "particulars": "AKASH KU",
+    "amount": 40.0,
+    "type": "debit",
+    "category": "Travel & Trips",
+    "tags": [
+      "Trip with friends"
+    ]
+  },
+  {
+    "id": "txn_073",
+    "date": "2026-09-24",
+    "particulars": "Sms Charges",
+    "amount": 47.5,
+    "type": "debit",
+    "category": "Bank Charges",
+    "tags": [
+      "Fee"
+    ]
+  },
+  {
+    "id": "txn_074",
+    "date": "2026-09-24",
+    "particulars": "Aditya K",
+    "amount": 520.0,
+    "type": "debit",
+    "category": "Travel & Trips",
+    "tags": [
+      "Trip with friends"
+    ]
+  },
+  {
+    "id": "txn_075",
+    "date": "2026-09-25",
+    "particulars": "Kanishka",
+    "amount": 12.0,
+    "type": "debit",
+    "category": "Food & Grocery",
+    "tags": [
+      "Vendor"
+    ]
+  }
+]
