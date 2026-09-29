@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test": "node --import tsx --test tests/*.test.ts",
     "db:start": "pg_ctl -D \"$HOME/.local/share/spendium/pgdata\" -l \"$HOME/.local/share/spendium/pgdata/logfile\" -o \"-p 5432 -k /tmp\" start",
     "db:stop": "pg_ctl -D \"$HOME/.local/share/spendium/pgdata\" stop",
     "db:generate": "drizzle-kit generate",
@@ -15,8 +16,10 @@
     "db:cleanup-expired": "node --env-file=.env --import tsx scripts/cleanup-expired.ts"
   },
   "dependencies": {
+    "@ai-sdk/openai-compatible": "^3.0.59",
     "@base-ui/react": "^1.8.0",
     "@tanstack/react-query": "^5.104.0",
+    "ai": "^7.0.122",
     "better-auth": "^1.7.6",
     "class-variance-authority": "^0.7.1",
     "cn": "^0.4.0",
@@ -31,6 +34,7 @@
     "recharts": "^3.10.1",
     "shadcn": "^4.21.0",
     "tw-animate-css": "^1.4.0",
+    "zod": "^4.6.5",
     "zustand": "^5.0.15"
   },
   "devDependencies": {

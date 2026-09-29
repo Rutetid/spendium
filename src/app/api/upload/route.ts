@@ -1,12 +1,16 @@
 import { db } from '@/db';
-import { statements } from '@/db/schema';
+import { rules, statements, transactions, type Transaction } from '@/db/schema';
 import { auth } from '@/lib/auth';
+import { categorizeTransactions } from '@/lib/llm-categorize';
+import { matchRules } from '@/lib/match-rules';
+import { parseStatement } from '@/lib/parse-statement';
 import {
   extractAndSanitize,
   IngestionError,
   PAGE1_HEADER_STRIP_FRACTION,
   RAW_TEXT_TTL_DAYS,
 } from '@/lib/pdf-extract';
+import { eq } from 'drizzle-orm';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
@@ -77,6 +81,41 @@ export async function POST(req: Request) {
     );
   }
 
+  let parsed;
+  try {
+    parsed = parseStatement(extraction.text);
+  } catch (error) {
+    console.error('[ingest] parse failed:', error);
+    return Response.json(
+      { error: "We couldn't find any transactions in this statement." },
+      { status: 422 },
+    );
+  }
+
+  const userRules = await db
+    .select()
+    .from(rules)
+    .where(eq(rules.userId, session.user.id));
+  const matched = matchRules(parsed.transactions, userRules);
+
+  let categorized;
+  try {
+    categorized = await categorizeTransactions(matched);
+  } catch (error) {
+    console.error('[ingest] LLM categorization failed:', error);
+    return Response.json(
+      { error: 'Automatic categorization failed. Please try again.' },
+      { status: 502 },
+    );
+  }
+  if (categorized.some((t) => t.category === null)) {
+    console.error('[ingest] categorization left null categories');
+    return Response.json(
+      { error: 'Automatic categorization failed. Please try again.' },
+      { status: 502 },
+    );
+  }
+
   const [row] = await db
     .insert(statements)
     .values({
@@ -96,11 +135,34 @@ export async function POST(req: Request) {
     );
   }
 
+  const inserted: Transaction[] =
+    categorized.length === 0
+      ? []
+      : await db
+          .insert(transactions)
+          .values(
+            categorized.map((t) => ({
+              id: crypto.randomUUID(),
+              statementId: row.id,
+              userId: session.user.id,
+              date: t.date,
+              particulars: t.particulars,
+              amount: t.amount,
+              type: t.type,
+              category: t.category,
+              tags: t.tags,
+              isClarificationNeeded: t.isClarificationNeeded,
+              userNotes: t.userNotes,
+            })),
+          )
+          .returning();
+
   return Response.json({
     id: row.id,
     uploadedAt: row.uploadedAt,
     rawTextExpiresAt: row.rawTextExpiresAt,
     totalPages: extraction.totalPages,
     text: extraction.text,
+    transactions: inserted,
   });
 }

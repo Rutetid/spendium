@@ -40,7 +40,7 @@ export const transactions = pgTable(
     particulars: text('particulars').notNull(),
     amount: doublePrecision('amount').notNull(),
     type: text('type').$type<TransactionType>().notNull(),
-    category: text('category').$type<CategoryType>().notNull(),
+    category: text('category').$type<CategoryType | null>(),
     tags: text('tags').array().notNull().default([]),
     isClarificationNeeded: boolean('is_clarification_needed')
       .notNull()

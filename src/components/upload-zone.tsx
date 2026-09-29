@@ -4,6 +4,8 @@ import { useMutation } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Upload } from 'lucide-react';
 import { useRef, useState } from 'react';
+import type { Transaction } from '@/db/schema';
+import { useAppStore } from '@/store/use-app-store';
 
 interface UploadResult {
   id: string;
@@ -11,12 +13,14 @@ interface UploadResult {
   rawTextExpiresAt: string;
   totalPages: number;
   text: string;
+  transactions: Transaction[];
 }
 
 export function UploadZone() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [result, setResult] = useState<UploadResult | null>(null);
+  const setTransactions = useAppStore((state) => state.setTransactions);
 
   const upload = useMutation({
     mutationFn: async (file: File) => {
@@ -29,7 +33,10 @@ export function UploadZone() {
       }
       return json as UploadResult;
     },
-    onSuccess: (data) => setResult(data),
+    onSuccess: (data) => {
+      setResult(data);
+      setTransactions(data.transactions);
+    },
   });
 
   return (
