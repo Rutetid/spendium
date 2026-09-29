@@ -1,5 +1,5 @@
 import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
-import { Output, generateText } from 'ai';
+import { NoObjectGeneratedError, Output, generateText } from 'ai';
 import { z } from 'zod';
 import { CATEGORIES, type CategoryType } from './categories';
 import type { MatchedTransaction } from './match-rules';
@@ -119,6 +119,32 @@ Transactions:
 ${list}`;
 }
 
+export const LLM_RAW_LOG_PREFIX = '[llm:raw] ';
+
+/**
+ * Pure formatter for the raw-response line — emits nothing itself; the
+ * caller decides emission (LLM_DEBUG === '1'). Distinct from the error path:
+ * `source: 'error'` carries the raw text of a REJECTED, schema-invalid reply.
+ */
+export function buildRawLogLine(info: {
+  source: 'success' | 'error';
+  model: string;
+  items: number;
+  text?: string;
+  usage?: unknown;
+  response?: unknown;
+}): string {
+  const payload: Record<string, unknown> = {
+    source: info.source,
+    model: info.model,
+    items: info.items,
+  };
+  if (info.text !== undefined) payload.text = info.text;
+  if (info.usage !== undefined) payload.usage = info.usage;
+  if (info.response !== undefined) payload.response = info.response;
+  return `${LLM_RAW_LOG_PREFIX}${JSON.stringify(payload)}`;
+}
+
 /**
  * Categorize all null-category transactions of one upload in a SINGLE
  * schema-validated LLM call (OpenRouter, OpenAI-compatible), then merge the
@@ -144,21 +170,51 @@ export async function categorizeTransactions(
   if (!apiKey) {
     throw new Error('OPENROUTER_API_KEY is not set');
   }
+  const model = process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini';
+  const debug = process.env.LLM_DEBUG === '1';
   const provider = createOpenAICompatible({
     name: 'openrouter',
     baseURL: 'https://openrouter.ai/api/v1',
     apiKey,
   });
-  const { output } = await generateText({
-    model: provider.chatModel(
-      process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini',
-    ),
-    output: Output.array({
-      element: llmResultSchema,
-      minItems: payload.length,
-      maxItems: payload.length,
-    }),
-    prompt: buildPrompt(payload),
-  });
-  return mergeLlmResults(transactions, output);
+  let merged: MatchedTransaction[];
+  try {
+    const result = await generateText({
+      model: provider.chatModel(model),
+      output: Output.array({
+        element: llmResultSchema,
+        minItems: payload.length,
+        maxItems: payload.length,
+      }),
+      prompt: buildPrompt(payload),
+    });
+    if (debug) {
+      console.log(
+        buildRawLogLine({
+          source: 'success',
+          model,
+          items: payload.length,
+          text: result.text,
+          usage: result.usage,
+          response: result.response,
+        }),
+      );
+    }
+    merged = mergeLlmResults(transactions, result.output);
+  } catch (err) {
+    if (debug && err instanceof NoObjectGeneratedError) {
+      console.log(
+        buildRawLogLine({
+          source: 'error',
+          model,
+          items: payload.length,
+          text: err.text,
+          usage: err.usage,
+          response: err.response,
+        }),
+      );
+    }
+    throw err;
+  }
+  return merged;
 }

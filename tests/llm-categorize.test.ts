@@ -3,6 +3,8 @@ import { test } from 'node:test';
 import {
   buildLlmPayload,
   buildPrompt,
+  buildRawLogLine,
+  LLM_RAW_LOG_PREFIX,
   mergeLlmResults,
   type LlmResult,
 } from '../src/lib/llm-categorize';
@@ -131,4 +133,52 @@ test('buildPrompt: includes fixed category list, batch size, few-shot placeholde
   // Raw PII never appears in the prompt text.
   assert.doesNotMatch(prompt, /@\S+/);
   assert.doesNotMatch(prompt, /\d{9,}/);
+});
+
+test('buildRawLogLine: greppable prefix, all fields, raw text verbatim', () => {
+  const raw = '{"elements":[{"category":"Other","tags":["x"],"confidence":"high"}]}';
+  const line = buildRawLogLine({
+    source: 'success',
+    model: 'dots-studio/dots-3-note-preview:free',
+    items: 74,
+    text: raw,
+    usage: { inputTokens: 10, outputTokens: 20 },
+    response: { id: 'resp_1' },
+  });
+  assert.ok(line.startsWith(LLM_RAW_LOG_PREFIX));
+  const parsed = JSON.parse(line.slice(LLM_RAW_LOG_PREFIX.length));
+  assert.equal(parsed.source, 'success');
+  assert.equal(parsed.model, 'dots-studio/dots-3-note-preview:free');
+  assert.equal(parsed.items, 74);
+  assert.equal(parsed.text, raw);
+  assert.deepEqual(parsed.usage, { inputTokens: 10, outputTokens: 20 });
+  assert.equal(parsed.response.id, 'resp_1');
+});
+
+test('buildRawLogLine: error path without usage/response omits those keys', () => {
+  const parsed = JSON.parse(
+    buildRawLogLine({
+      source: 'error',
+      model: 'm',
+      items: 2,
+      text: 'not json',
+    }).slice(LLM_RAW_LOG_PREFIX.length),
+  );
+  assert.equal(parsed.source, 'error');
+  assert.equal(parsed.text, 'not json');
+  assert.ok(!('usage' in parsed));
+  assert.ok(!('response' in parsed));
+});
+
+test('buildRawLogLine: quotes/newlines/escapes in raw text round-trip', () => {
+  const raw = 'line1\n"quoted" \\ {"elements": []}';
+  const parsed = JSON.parse(
+    buildRawLogLine({
+      source: 'success',
+      model: 'm',
+      items: 1,
+      text: raw,
+    }).slice(LLM_RAW_LOG_PREFIX.length),
+  );
+  assert.equal(parsed.text, raw);
 });
