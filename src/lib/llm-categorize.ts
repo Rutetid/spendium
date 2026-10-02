@@ -1,7 +1,7 @@
-import { createOpenAICompatible } from '@ai-sdk/openai-compatible';
 import { NoObjectGeneratedError, Output, generateText } from 'ai';
 import { z } from 'zod';
 import { CATEGORIES, type CategoryType } from './categories';
+import { hasLlmProviders, withLlmFallback } from './llm-provider';
 import type { MatchedTransaction } from './match-rules';
 import { sanitizeForLlm } from './sanitize-for-llm';
 
@@ -10,11 +10,15 @@ import { sanitizeForLlm } from './sanitize-for-llm';
  * `category` is constrained to the Phase 0 enum — the model cannot return
  * free text; an invalid category fails schema validation and rejects the
  * whole response (AI_NoObjectGeneratedError), it is never silently accepted.
+ *
+ * `confidence` accepts `medium` because gemini-class models emit it despite
+ * the prompt's high/low guidance; `mergeLlmResults` treats anything below
+ * `high` as low confidence (flagged for review).
  */
 export const llmResultSchema = z.object({
   category: z.enum(CATEGORIES as [CategoryType, ...CategoryType[]]),
   tags: z.array(z.string()),
-  confidence: z.enum(['high', 'low']),
+  confidence: z.enum(['high', 'medium', 'low']),
 });
 
 export type LlmResult = z.infer<typeof llmResultSchema>;
@@ -48,7 +52,8 @@ export function buildLlmPayload(
  *
  * - Transactions already categorized by a rule are returned untouched.
  * - Null-category transactions are filled from `results` in order.
- * - `confidence: 'low'` sets `isClarificationNeeded: true` (same flag the
+ * - `confidence` below `'high'` (`low`, and `medium` — emitted by
+ *   gemini-class models) sets `isClarificationNeeded: true` (same flag the
  *   rule matcher uses for conflicting rules, so Phase 4 can treat both
  *   sources uniformly).
  * - A length mismatch (short or long results) throws — callers must fail
@@ -75,7 +80,7 @@ export function mergeLlmResults(
       category: result.category,
       tags: result.tags,
       isClarificationNeeded:
-        result.confidence === 'low' ? true : txn.isClarificationNeeded,
+        result.confidence === 'high' ? txn.isClarificationNeeded : true,
     };
   });
   if (cursor !== results.length) {
@@ -106,9 +111,9 @@ export function buildPrompt(payload: readonly LlmPayloadRow[]): string {
   return `Categorize bank transactions into exactly one category from this fixed list:
 ${CATEGORIES.join(', ')}
 
-Output format: a JSON object {"elements": [...]} containing exactly ${payload.length} elements, one per input transaction, in the same order (element i corresponds to transaction i). Each element must be {"category": "<one category from the list>", "tags": ["short", "labels"], "confidence": "high" | "low"}.
+Output format: a JSON object {"elements": [...]} containing exactly ${payload.length} elements, one per input transaction, in the same order (element i corresponds to transaction i). Each element must be {"category": "<one category from the list>", "tags": ["short", "labels"], "confidence": "high" | "medium" | "low"}.
 
-Confidence: "high" when the description clearly implies the category; "low" when you are guessing — unknown merchant, ambiguous wording, or a description that was partially redacted for privacy (handles and phone numbers were removed before sending).
+Confidence: "high" when the description clearly implies the category; "medium" when the merchant is recognizable but the category is only likely; "low" when you are guessing — unknown merchant, ambiguous wording, or a description that was partially redacted for privacy (handles and phone numbers were removed before sending).
 
 Tags: 0 to 3 short labels (merchant/channel), no personal data.
 
@@ -147,8 +152,9 @@ export function buildRawLogLine(info: {
 
 /**
  * Categorize all null-category transactions of one upload in a SINGLE
- * schema-validated LLM call (OpenRouter, OpenAI-compatible), then merge the
- * results back. Rule-matched transactions pass through untouched.
+ * schema-validated LLM call via the provider fallback chain (see
+ * llm-provider.ts — Cerebras → Groq → OpenRouter, configurable), then merge
+ * the results back. Rule-matched transactions pass through untouched.
  *
  * Note: the spec asked for `generateObject`; in the installed ai@7 that API
  * is deprecated in favor of `generateText` + `Output.array({ element })`,
@@ -166,33 +172,36 @@ export async function categorizeTransactions(
   if (payload.length === 0) {
     return transactions.map((txn) => ({ ...txn }));
   }
-  const apiKey = process.env.OPENROUTER_API_KEY;
-  if (!apiKey) {
-    throw new Error('OPENROUTER_API_KEY is not set');
+  if (!hasLlmProviders()) {
+    throw new Error('LLM API key is not set');
   }
-  const model = process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini';
   const debug = process.env.LLM_DEBUG === '1';
-  const provider = createOpenAICompatible({
-    name: 'openrouter',
-    baseURL: 'https://openrouter.ai/api/v1',
-    apiKey,
-  });
   let merged: MatchedTransaction[];
+  let servedBy: string | undefined;
   try {
-    const result = await generateText({
-      model: provider.chatModel(model),
-      output: Output.array({
-        element: llmResultSchema,
-        minItems: payload.length,
-        maxItems: payload.length,
-      }),
-      prompt: buildPrompt(payload),
-    });
+    const result = await withLlmFallback(
+      'categorize',
+      async (model, provider) => {
+        servedBy = provider.model;
+        return generateText({
+          model,
+          output: Output.array({
+            element: llmResultSchema,
+            minItems: payload.length,
+            maxItems: payload.length,
+          }),
+          prompt: buildPrompt(payload),
+          // Per-provider retries as in the chat route — exhausted retries fall
+          // through withLlmFallback to the next provider (see llm-provider.ts).
+          maxRetries: provider.retries,
+        });
+      },
+    );
     if (debug) {
       console.log(
         buildRawLogLine({
           source: 'success',
-          model,
+          model: servedBy ?? 'unknown',
           items: payload.length,
           text: result.text,
           usage: result.usage,
@@ -206,7 +215,7 @@ export async function categorizeTransactions(
       console.log(
         buildRawLogLine({
           source: 'error',
-          model,
+          model: servedBy ?? 'unknown',
           items: payload.length,
           text: err.text,
           usage: err.usage,

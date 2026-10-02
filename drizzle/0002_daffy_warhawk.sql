@@ -1,0 +1,1 @@
+ALTER TABLE "rules" ADD COLUMN "tags" text[] DEFAULT '{}' NOT NULL;

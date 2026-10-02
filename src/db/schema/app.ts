@@ -62,6 +62,7 @@ export const rules = pgTable(
       .references(() => user.id, { onDelete: 'cascade' }),
     vendorPattern: text('vendor_pattern').notNull(),
     category: text('category').$type<CategoryType>().notNull(),
+    tags: text('tags').array().notNull().default([]),
     confidence: doublePrecision('confidence').notNull().default(1),
     alternates: text('alternates').array().notNull().default([]),
     createdAt: timestamp('created_at', { withTimezone: true })

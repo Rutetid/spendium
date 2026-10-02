@@ -4,6 +4,7 @@ import {
   buildLlmPayload,
   buildPrompt,
   buildRawLogLine,
+  llmResultSchema,
   LLM_RAW_LOG_PREFIX,
   mergeLlmResults,
   type LlmResult,
@@ -70,7 +71,7 @@ test('buildLlmPayload: only null-category rows, in order, sanitized, sequentiall
   });
   assert.deepEqual(payload[1], {
     i: 1,
-    description: 'Blinkit', // counterparty branch, not raw narration
+    description: 'UPIAR/9/DR/Blinkit', // full narration kept (no PII in it)
     type: 'credit',
   });
 });
@@ -101,6 +102,32 @@ test('merge does not mutate its input', () => {
   assert.equal(input[0].category, null);
 });
 
+test('merge: medium confidence flags for review exactly like low', () => {
+  const merged = mergeLlmResults([needsLlmA], [
+    { category: 'Peer Transfers', tags: ['x'], confidence: 'medium' },
+  ]);
+  assert.equal(merged[0].category, 'Peer Transfers');
+  assert.equal(merged[0].isClarificationNeeded, true);
+});
+
+test('llmResultSchema: accepts medium, rejects values outside the enum', () => {
+  const parsed = llmResultSchema.parse({
+    category: 'Peer Transfers',
+    tags: [],
+    confidence: 'medium',
+  });
+  assert.equal(parsed.confidence, 'medium');
+  assert.throws(
+    () =>
+      llmResultSchema.parse({
+        category: 'Peer Transfers',
+        tags: [],
+        confidence: 'certain',
+      }),
+    /Invalid option/,
+  );
+});
+
 test('merge: too-short results throw instead of inserting partial data', () => {
   assert.throws(
     () => mergeLlmResults([needsLlmA, needsLlmB], [llmA]),
@@ -127,9 +154,10 @@ test('buildPrompt: includes fixed category list, batch size, few-shot placeholde
   assert.match(prompt, /Trading & Investments/);
   assert.match(prompt, /exactly 1 elements/);
   assert.match(prompt, /\{"elements": \[\.\.\.\]\}/);
+  assert.match(prompt, /"high" \| "medium" \| "low"/);
   assert.match(prompt, /PLACEHOLDER/);
   assert.match(prompt, /GROWW -> Trading & Investments/);
-  assert.match(prompt, /0\. \[credit\] Blinkit/);
+  assert.match(prompt, /0\. \[credit\] UPIAR\/9\/DR\/Blinkit/);
   // Raw PII never appears in the prompt text.
   assert.doesNotMatch(prompt, /@\S+/);
   assert.doesNotMatch(prompt, /\d{9,}/);

@@ -1,6 +1,7 @@
 import { asc, eq } from 'drizzle-orm';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { ChatPanel } from '@/components/chat-panel';
 import { SignOutButton } from '@/components/sign-out-button';
 import { TransactionsTable } from '@/components/transactions-table';
 import { UploadZone } from '@/components/upload-zone';
@@ -24,7 +25,7 @@ export default async function DashboardPage() {
     .orderBy(asc(transactions.date), asc(transactions.id));
 
   return (
-    <main className="mx-auto w-full max-w-5xl p-6">
+    <main className="mx-auto w-full max-w-6xl p-6">
       <header className="mb-6 flex items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-semibold">Dashboard</h1>
@@ -33,7 +34,10 @@ export default async function DashboardPage() {
         <SignOutButton />
       </header>
       <UploadZone />
-      <TransactionsTable data={rows} />
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <TransactionsTable data={rows} />
+        <ChatPanel />
+      </div>
     </main>
   );
 }

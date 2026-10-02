@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test": "node --import tsx --test tests/*.test.ts",
-    "db:start": "pg_ctl -D \"$HOME/.local/share/spendium/pgdata\" -l \"$HOME/.local/share/spendium/pgdata/logfile\" -o \"-p 5432 -k /tmp\" start",
+    "db:start": "pg_ctl -D \"$HOME/.local/share/spendium/pgdata\" -l \"$HOME/.local/share/spendium/pgdata/logfile\" -o \"-p 5433 -k /tmp\" start",
     "db:stop": "pg_ctl -D \"$HOME/.local/share/spendium/pgdata\" stop",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
